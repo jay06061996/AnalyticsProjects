@@ -6,7 +6,7 @@ Where continent is not null
 order by 1,2
 
 
--- Total Cases vs Total Deaths
+-- Total Cases vs Total Deaths (death rate)
 
 Select Location, date, total_cases,total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 From CovidDeaths
@@ -19,7 +19,7 @@ order by 1,2
 
 Select Location, date, Population, total_cases,  (total_cases/population)*100 as PercentPopulationInfected
 From CovidDeaths
-Where location like '%states%'
+Where location like '%ind%'
 order by 1,2
 
 
@@ -28,8 +28,8 @@ order by 1,2
 Select Location, Population, MAX(total_cases) as HighestInfectionCount, 
 Max((total_cases/population))*100 as PercentPopulationInfected
 From CovidDeaths
---Where location like '%states%'
-Group by Location, Population
+--Where location like '%ind%'
+Group by Location
 order by PercentPopulationInfected desc
 
 
