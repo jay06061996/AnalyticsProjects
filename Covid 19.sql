@@ -52,7 +52,7 @@ Group by continent
 order by TotalDeathCount desc
 
 
--- GLOBAL NUMBERS
+-- Daily Global Numbers
 
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths,
 SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
@@ -62,13 +62,12 @@ Group By date
 order by 1,2
 
 
-
 -- Total Population vs Vaccinations
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine
 
-Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(CONVERT(int,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated
---, (RollingPeopleVaccinated/population)*100
+Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+SUM(CONVERT(int,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated,
+(RollingPeopleVaccinated/population)*100
 From CovidDeaths dea
 Join CovidVaccinations vac
 	On dea.location = vac.location
