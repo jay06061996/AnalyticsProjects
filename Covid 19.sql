@@ -93,7 +93,6 @@ Select *, (RollingPeopleVaccinated/Population)*100
 From PopvsVac
 
 
-
 -- Using Temp Table to perform Calculation on Partition By in previous query
 
 DROP Table if exists #PercentPopulationVaccinated
@@ -119,7 +118,6 @@ Select *, (RollingPeopleVaccinated/Population)*100
 From #PercentPopulationVaccinated
 
 
-
 -- Creating View to store data for later visualizations
 
 Create View PercentPopulationVaccinated as
@@ -134,7 +132,6 @@ where dea.continent is not null
 
 
 
-
 /*
 Queries used for Power BI Project
 */
@@ -146,7 +143,7 @@ Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deat
 SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
 From CovidDeaths
 where continent is not null 
---Group By date
+Group By date
 order by 1,2
 
 
@@ -154,8 +151,7 @@ order by 1,2
 
 Select location, SUM(cast(new_deaths as int)) as TotalDeathCount
 From CovidDeaths
-Where continent is null 
-and location not in ('World', 'European Union', 'International')
+Where locatoin is not null
 Group by location
 order by TotalDeathCount desc
 
@@ -163,7 +159,7 @@ order by TotalDeathCount desc
 -- 3.
 
 Select Location, Population, MAX(total_cases) as HighestInfectionCount, 
-Max((total_cases/population))*100 as PercentPopulationInfected
+Max((total_cases)/population))*100 as PercentPopulationInfected
 From CovidDeaths
 Group by Location, Population
 order by PercentPopulationInfected desc
