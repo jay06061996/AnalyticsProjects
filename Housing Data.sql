@@ -5,10 +5,8 @@ From NashvilleHousing
 
 -- Standardize Date Format
 
-
 Select saleDateConverted, CONVERT(Date,SaleDate)
 From NashvilleHousing
-
 
 Update NashvilleHousing
 SET SaleDate = CONVERT(Date,SaleDate)
